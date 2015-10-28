@@ -38,7 +38,7 @@ var _instructor_model2 = _interopRequireDefault(_instructor_model);
 
 var contactsCollection = _backbone2['default'].Collection.extend({
 
-  urlRoot: 'https://api.parse.com/1/classes/contacts',
+  url: 'https://api.parse.com/1/classes/contacts',
 
   model: _instructor_model2['default'],
 
@@ -141,13 +141,14 @@ var Router = _backbone2['default'].Router.extend({
   },
 
   initialize: function initialize(appElement) {
-    console.log(appElement);
     this.$el = appElement;
+    // console.log(appElement);
 
     this.contacts = new _contacts_collection2['default']();
 
     var router = this;
 
+    // Create on click event function
     this.$el.on('click', '.instructor-list-item', function (event) {
       var $li = (0, _jquery2['default'])(event.currentTarget);
       var instructorId = $li.data('instructor-id');
@@ -163,20 +164,6 @@ var Router = _backbone2['default'].Router.extend({
 
   showSpinner: function showSpinner() {
     this.$el.html('<i class="fa fa-spinner fa-spin"></i>');
-  },
-
-  contacts: function contacts() {
-    console.log('show contacts page');
-    // this.$el.html( contactsTemplate() );
-
-    this.showSpinner();
-
-    // var router = this;
-
-    this.contacts.fetch().then(function () {
-
-      this.$el.html((0, _viewsContacts2['default'])(this.contacts.toJSON()));
-    });
   },
 
   showSpecificInstructor: function showSpecificInstructor(instructorId) {
@@ -197,6 +184,19 @@ var Router = _backbone2['default'].Router.extend({
         });
       })();
     }
+  },
+
+  contacts: function contacts() {
+    console.log('show contacts page');
+
+    this.showSpinner();
+
+    var router = this;
+
+    this.contacts.fetch().then(function () {
+
+      router.$el.html((0, _viewsContacts2['default'])(router.contacts.toJSON()));
+    });
   },
 
   start: function start() {

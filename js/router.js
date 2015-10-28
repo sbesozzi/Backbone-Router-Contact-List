@@ -2,6 +2,7 @@ import Backbone from 'backbone';
 import $ from 'jquery';
 
 import contactsCollection from './contacts_collection';
+
 import contactsTemplate from './views/contacts';
 import instructorTemplate from './views/instructor';
 
@@ -15,13 +16,14 @@ let Router = Backbone.Router.extend({
   },
 
   initialize: function(appElement) {
-    console.log(appElement);
     this.$el = appElement;
+    // console.log(appElement);
 
     this.contacts = new contactsCollection();
 
     let router = this;
 
+    // Create on click event function
     this.$el.on('click', '.instructor-list-item', function(event) {
       let $li = $(event.currentTarget);
       var instructorId = $li.data('instructor-id');
@@ -41,21 +43,7 @@ let Router = Backbone.Router.extend({
     );
   },
 
-  contacts: function() {
-    console.log('show contacts page');
-    // this.$el.html( contactsTemplate() );
-
-    this.showSpinner();
-
-    // var router = this;
-
-    this.contacts.fetch().then(function() {
-
-      this.$el.html( contactsTemplate(this.contacts.toJSON()) );
-
-    });
-  },
-
+  
   showSpecificInstructor: function(instructorId) {
     console.log('show instructor page');
     let instructor = this.contacts.get(instructorId);
@@ -72,6 +60,21 @@ let Router = Backbone.Router.extend({
     }
 
   },
+
+  contacts: function() {
+    console.log('show contacts page');
+
+    this.showSpinner();
+
+    let router = this;
+
+    this.contacts.fetch().then(function() {
+
+      router.$el.html( contactsTemplate(router.contacts.toJSON()) );
+
+    });
+  },
+
 
   start: function() {
     Backbone.history.start();

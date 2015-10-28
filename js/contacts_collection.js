@@ -3,7 +3,7 @@ import instructorModel from './instructor_model';
 
 let contactsCollection = Backbone.Collection.extend({
 
-  urlRoot: 'https://api.parse.com/1/classes/contacts',
+  url: 'https://api.parse.com/1/classes/contacts',
 
   model: instructorModel,
 
