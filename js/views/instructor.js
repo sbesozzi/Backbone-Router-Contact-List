@@ -1,4 +1,5 @@
 function instructorTemplate(data) {
+
   return`
     <ul>
       <li>${data.Photo}</li>
@@ -7,7 +8,7 @@ function instructorTemplate(data) {
       <li><i class='fa fa-phone-square'></i>${data.Phone}</li>
       <li><i class='fa fa-globe'></i>${data.Location}</li>
     </ul>
-  `;
+  `
 }
 
 export default instructorTemplate;

@@ -17,7 +17,7 @@ let Router = Backbone.Router.extend({
 
   initialize: function(appElement) {
     this.$el = appElement;
-    // console.log(appElement);
+    console.log(appElement);
 
     this.contacts = new contactsCollection();
 
@@ -32,18 +32,12 @@ let Router = Backbone.Router.extend({
     });
   },
 
-  // home: function() {
-  //   console.log('show home page');
-  //   this.$el.html( homeTemplate() );
-  // },
-
   showSpinner: function() {
     this.$el.html(
       '<i class="fa fa-spinner fa-spin"></i>'
     );
   },
 
-  
   showSpecificInstructor: function(instructorId) {
     console.log('show instructor page');
     let instructor = this.contacts.get(instructorId);
@@ -52,7 +46,7 @@ let Router = Backbone.Router.extend({
       this.$el.html( instructorTemplate(instructor.toJSON()) );
     } else {
       let router = this;
-      let instructor = this.contacts.add({objectId: instructorId});
+      instructor = this.contacts.add({objectId: instructorId});
       this.showSpinner();
       instructor.fetch().then(function() {
         router.$el.html( instructorTemplate(instructor.toJSON()) );
@@ -73,6 +67,7 @@ let Router = Backbone.Router.extend({
       router.$el.html( contactsTemplate(router.contacts.toJSON()) );
 
     });
+
   },
 
 

@@ -142,7 +142,7 @@ var Router = _backbone2['default'].Router.extend({
 
   initialize: function initialize(appElement) {
     this.$el = appElement;
-    // console.log(appElement);
+    console.log(appElement);
 
     this.contacts = new _contacts_collection2['default']();
 
@@ -156,11 +156,6 @@ var Router = _backbone2['default'].Router.extend({
       router.showSpecificInstructor(instructorId);
     });
   },
-
-  // home: function() {
-  //   console.log('show home page');
-  //   this.$el.html( homeTemplate() );
-  // },
 
   showSpinner: function showSpinner() {
     this.$el.html('<i class="fa fa-spinner fa-spin"></i>');
@@ -177,7 +172,7 @@ var Router = _backbone2['default'].Router.extend({
     } else {
       (function () {
         var router = _this;
-        var instructor = _this.contacts.add({ objectId: instructorId });
+        instructor = _this.contacts.add({ objectId: instructorId });
         _this.showSpinner();
         instructor.fetch().then(function () {
           router.$el.html((0, _viewsInstructor2['default'])(instructor.toJSON()));
@@ -216,12 +211,12 @@ Object.defineProperty(exports, '__esModule', {
 });
 function processData(data) {
   return data.map(function (item) {
-    return '\n      console.log(processData);\n      <li class=\'contact-list-item\' data-contact-list-id="' + item.objectId + '">' + item.Name + '</li>\n      ';
+    return '\n      <li class=\'contact-list-item\' data-contact-list-id="' + item.objectId + '">' + item.Name + '</li>\n      ';
   }).join('');
 }
 
 function contactsTemplate(data) {
-  return '\n    <h1>Contact List</h1>\n    <ul>' + processData(data) + '</ul>\n  ';
+  return '\n    <h3>Contact List</h3>\n    <ul>' + processData(data) + '</ul>\n  ';
 }
 
 exports['default'] = contactsTemplate;
@@ -234,6 +229,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 function instructorTemplate(data) {
+
   return "\n    <ul>\n      <li>" + data.Photo + "</li>\n      <li><i class='fa fa-user'></i>" + data.Name + "</li>\n      <li><i class='fa fa-enevelope'></i>" + data.Email + "</li>\n      <li><i class='fa fa-phone-square'></i>" + data.Phone + "</li>\n      <li><i class='fa fa-globe'></i>" + data.Location + "</li>\n    </ul>\n  ";
 }
 

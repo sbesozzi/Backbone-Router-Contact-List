@@ -2018,8 +2018,29 @@
 .fa-fonticons:before {
   content: ""; }
 
-.contacts {
+ul {
+  list-style-type: none; }
+
+.app {
   height: 500px;
-  margin: auto; }
+  width: 400px;
+  margin: auto;
+  margin-top: 50px;
+  border: 1px solid #DDDDDD; }
+  .app h3 {
+    height: 50px;
+    margin: 0;
+    padding-top: 20px;
+    padding-left: 20px;
+    color: white;
+    background-color: #85BD00; }
+  .app ul {
+    margin: 0;
+    padding-left: 0; }
+  .app li {
+    margin: 0;
+    padding: 20px 20px;
+    border-bottom: 1px solid #DDDDDD;
+    font-size: 14px; }
 
 /*# sourceMappingURL=main.css.map */

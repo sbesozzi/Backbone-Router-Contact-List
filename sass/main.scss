@@ -1,7 +1,38 @@
 @import "bourbon";
 @import "font-awesome";
 
-.contacts {
+
+ul {
+  list-style-type: none;
+}
+
+.app {
   height: 500px;
+  width: 400px;
   margin: auto;
+  margin-top: 50px;
+  border: 1px solid #DDDDDD;
+
+  h3 {
+    height: 50px;
+    margin: 0;
+    padding-top: 20px;
+    padding-left: 20px;
+    color: white;
+    background-color: #85BD00;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 0;
+  }
+
+  li {
+    margin: 0;
+    padding: 20px 20px;
+    border-bottom: 1px solid #DDDDDD;
+    font-size: 14px;
+
+  }
+
 }
