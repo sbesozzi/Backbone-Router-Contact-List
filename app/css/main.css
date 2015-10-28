@@ -2018,7 +2018,8 @@
 .fa-fonticons:before {
   content: ""; }
 
-body {
-  background: #e2ebf3; }
+.contacts {
+  height: 500px;
+  margin: auto; }
 
 /*# sourceMappingURL=main.css.map */

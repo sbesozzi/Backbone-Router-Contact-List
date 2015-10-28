@@ -2,8 +2,6 @@ import Backbone from 'backbone';
 import $ from 'jquery';
 
 import contactsCollection from './contacts_collection';
-
-// import homeTemplate from './views/home';
 import contactsTemplate from './views/contacts';
 import instructorTemplate from './views/instructor';
 
@@ -13,7 +11,6 @@ let Router = Backbone.Router.extend({
   routes: {
     // "" : "home",
     "" : "contacts",
-    // "contacts" : "showContacts",
     "contacts/:id" : "showSpecificInstructor"
   },
 
@@ -38,24 +35,25 @@ let Router = Backbone.Router.extend({
   //   this.$el.html( homeTemplate() );
   // },
 
-  contacts: function() {
-    console.log('show contacts page');
-
-    this.showSpinner();
-
-    var router = this;
-
-    this.contacts.fetch().then(function() {
-
-      router.$el.html( contactsTemplate(router.contacts.toJSON()) );
-
-    });
-  },
-
   showSpinner: function() {
     this.$el.html(
       '<i class="fa fa-spinner fa-spin"></i>'
     );
+  },
+
+  contacts: function() {
+    console.log('show contacts page');
+    // this.$el.html( contactsTemplate() );
+
+    this.showSpinner();
+
+    // var router = this;
+
+    this.contacts.fetch().then(function() {
+
+      this.$el.html( contactsTemplate(this.contacts.toJSON()) );
+
+    });
   },
 
   showSpecificInstructor: function(instructorId) {
@@ -66,7 +64,7 @@ let Router = Backbone.Router.extend({
       this.$el.html( instructorTemplate(instructor.toJSON()) );
     } else {
       let router = this;
-      instructor = this.contacts.add({objectId: instructorId});
+      let instructor = this.contacts.add({objectId: instructorId});
       this.showSpinner();
       instructor.fetch().then(function() {
         router.$el.html( instructorTemplate(instructor.toJSON()) );
@@ -74,8 +72,6 @@ let Router = Backbone.Router.extend({
     }
 
   },
-
-  
 
   start: function() {
     Backbone.history.start();

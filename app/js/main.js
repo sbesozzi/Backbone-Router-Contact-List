@@ -37,6 +37,7 @@ var _instructor_model = require('./instructor_model');
 var _instructor_model2 = _interopRequireDefault(_instructor_model);
 
 var contactsCollection = _backbone2['default'].Collection.extend({
+
   urlRoot: 'https://api.parse.com/1/classes/contacts',
 
   model: _instructor_model2['default'],
@@ -64,9 +65,10 @@ var _backbone = require('backbone');
 var _backbone2 = _interopRequireDefault(_backbone);
 
 var instructorModel = _backbone2['default'].Model.extend({
+
   urlRoot: 'https://api.parse.com/1/classes/contacts',
 
-  idAttribute: 'object.id'
+  idAttribute: 'objectId'
 
 });
 
@@ -121,8 +123,6 @@ var _contacts_collection = require('./contacts_collection');
 
 var _contacts_collection2 = _interopRequireDefault(_contacts_collection);
 
-// import homeTemplate from './views/home';
-
 var _viewsContacts = require('./views/contacts');
 
 var _viewsContacts2 = _interopRequireDefault(_viewsContacts);
@@ -137,7 +137,6 @@ var Router = _backbone2['default'].Router.extend({
   routes: {
     // "" : "home",
     "": "contacts",
-    // "contacts" : "showContacts",
     "contacts/:id": "showSpecificInstructor"
   },
 
@@ -162,21 +161,22 @@ var Router = _backbone2['default'].Router.extend({
   //   this.$el.html( homeTemplate() );
   // },
 
+  showSpinner: function showSpinner() {
+    this.$el.html('<i class="fa fa-spinner fa-spin"></i>');
+  },
+
   contacts: function contacts() {
     console.log('show contacts page');
+    // this.$el.html( contactsTemplate() );
 
     this.showSpinner();
 
-    var router = this;
+    // var router = this;
 
     this.contacts.fetch().then(function () {
 
-      router.$el.html((0, _viewsContacts2['default'])(router.contacts.toJSON()));
+      this.$el.html((0, _viewsContacts2['default'])(this.contacts.toJSON()));
     });
-  },
-
-  showSpinner: function showSpinner() {
-    this.$el.html('<i class="fa fa-spinner fa-spin"></i>');
   },
 
   showSpecificInstructor: function showSpecificInstructor(instructorId) {
@@ -190,7 +190,7 @@ var Router = _backbone2['default'].Router.extend({
     } else {
       (function () {
         var router = _this;
-        instructor = _this.contacts.add({ objectId: instructorId });
+        var instructor = _this.contacts.add({ objectId: instructorId });
         _this.showSpinner();
         instructor.fetch().then(function () {
           router.$el.html((0, _viewsInstructor2['default'])(instructor.toJSON()));
@@ -234,7 +234,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 function instructorTemplate(data) {
-  return "\n    <ul>\n      <li>" + data.Photo + "</li>\n      <li>" + data.Name + "</li>\n      <li>" + data.Email + "</li>\n      <li>" + data.Phone + "</li>\n      <li>" + data.Location + "</li>\n    </ul>\n  ";
+  return "\n    <ul>\n      <li>" + data.Photo + "</li>\n      <li><i class='fa fa-user'></i>" + data.Name + "</li>\n      <li><i class='fa fa-enevelope'></i>" + data.Email + "</li>\n      <li><i class='fa fa-phone-square'></i>" + data.Phone + "</li>\n      <li><i class='fa fa-globe'></i>" + data.Location + "</li>\n    </ul>\n  ";
 }
 
 exports["default"] = instructorTemplate;
