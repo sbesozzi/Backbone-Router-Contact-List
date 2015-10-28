@@ -11,7 +11,8 @@ let Router = Backbone.Router.extend({
   // Routes & functions called when routes triggered
   routes: {
     // Default route ""
-    "" : "contacts",
+    "" : "redirectToContacts",
+    "contacts" : "showContacts",
     "instructor/:id" : "showSpecificInstructor"
   },
   // Initialize method on Router & automatically runs
@@ -42,7 +43,14 @@ let Router = Backbone.Router.extend({
 
   },
 
-  contacts: function() {
+  redirectToContacts: function() {
+    this.navigate('contacts', {
+      replace: true,
+      trigger: true
+    });
+  },
+
+  showContacts: function() {
     console.log('show contacts page');
 
     this.showSpinner();
@@ -77,7 +85,7 @@ let Router = Backbone.Router.extend({
         instructorTemplate(instructor.toJSON()
           ) 
         );
-    } else {
+    } else { 
       // Contacts not fectched so we need to load one you want
       let router = this;
       instructor = this.contacts.add({objectId: instructorId});

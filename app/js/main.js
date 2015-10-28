@@ -142,7 +142,8 @@ var Router = _backbone2['default'].Router.extend({
   // Routes & functions called when routes triggered
   routes: {
     // Default route ""
-    "": "contacts",
+    "": "redirectToContacts",
+    "contacts": "showContacts",
     "instructor/:id": "showSpecificInstructor"
   },
   // Initialize method on Router & automatically runs
@@ -174,7 +175,14 @@ var Router = _backbone2['default'].Router.extend({
     });
   },
 
-  contacts: function contacts() {
+  redirectToContacts: function redirectToContacts() {
+    this.navigate('contacts', {
+      replace: true,
+      trigger: true
+    });
+  },
+
+  showContacts: function showContacts() {
     var _this2 = this;
 
     console.log('show contacts page');
@@ -256,7 +264,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 function instructorTemplate(data) {
 
-  return "\n    <ul class=\"instructor\">\n      <button class=\"back-button\" data-to=\"contacts\">\n        <i class+'fa fa-arrow-left'></i>\n      </button>\n      <li class=\"photo\">" + data.Photo + "</li>\n      <li><i class='fa fa-user'></i>  " + data.Name + "</li>\n      <li><i class='fa fa-envelope'></i>  " + data.Email + "</li>\n      <li><i class='fa fa-phone-square'></i>  " + data.Phone + "</li>\n      <li><i class='fa fa-globe'></i>  " + data.Location + "</li>\n    </ul>\n  ";
+  return "\n\n    <ul class=\"instructor\">\n      <button class=\"back-button\" data-to>\n        <i class='fa fa-arrow-left'></i>\n      </button>\n      <li class=\"photo\">" + data.Photo + "</li>\n      <li><i class='fa fa-user'></i>  " + data.Name + "</li>\n      <li><i class='fa fa-envelope'></i>  " + data.Email + "</li>\n      <li><i class='fa fa-phone-square'></i>  " + data.Phone + "</li>\n      <li><i class='fa fa-globe'></i>  " + data.Location + "</li>\n    </ul>\n  ";
 }
 
 exports["default"] = instructorTemplate;
