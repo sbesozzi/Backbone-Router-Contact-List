@@ -42,6 +42,12 @@ var contactsCollection = _backbone2['default'].Collection.extend({
 
   model: _instructor_model2['default'],
 
+  // parse: function(data) {
+  //   return data.results;
+  // }
+
+  // Write parse function as:
+
   parse: function parse(data) {
     return data.results;
   }
@@ -93,7 +99,7 @@ require('./ajax_setup');
 // Create variable & jquery
 var appElement = (0, _jquery2['default'])('.app');
 
-// Create router & start it with a function
+// Create Router & start it with a function
 // Pass in appElement
 var router = new _router2['default'](appElement);
 router.start();
@@ -131,16 +137,19 @@ var _viewsInstructor = require('./views/instructor');
 
 var _viewsInstructor2 = _interopRequireDefault(_viewsInstructor);
 
-// Call extend method
+// Call extend method with constructor function
 var Router = _backbone2['default'].Router.extend({
   // Routes & functions called when routes triggered
   routes: {
-    // "" : "home",
+    // Default route ""
     "": "contacts",
-    "contacts/:id": "showSpecificInstructor"
+    "instructor/:id": "showSpecificInstructor"
   },
-
+  // Initialize method on Router & automatically runs
   initialize: function initialize(appElement) {
+    var _this = this;
+
+    // 'this' instance of router
     this.$el = appElement;
     console.log(appElement);
 
@@ -148,12 +157,35 @@ var Router = _backbone2['default'].Router.extend({
 
     var router = this;
 
-    // Create on click event function
+    // Create click event for contact list
+    // this.$el.on('click', '.instructor-list-item', function(event) {
     this.$el.on('click', '.instructor-list-item', function (event) {
       var $li = (0, _jquery2['default'])(event.currentTarget);
+
       var instructorId = $li.data('instructor-id');
-      router.navigate('contacts/' + instructorId);
-      router.showSpecificInstructor(instructorId);
+      _this.navigate('instructor/' + instructorId, { trigger: true }); //* Navigate instructor
+      _this.showSpecificInstructor(instructorId);
+    });
+    // Click event for back button
+    this.$el.on('click', '.back-button', function (event) {
+      var $button = (0, _jquery2['default'])(event.currentTarget);
+      var route = $button.data('to');
+      _this.navigate(route, { trigger: true });
+    });
+  },
+
+  contacts: function contacts() {
+    var _this2 = this;
+
+    console.log('show contacts page');
+
+    this.showSpinner();
+
+    var router = this;
+    // this.contacts.fetch().then(function() {
+    // router.$el.html( contactsTemplate(router.contacts.toJSON()) );
+    this.contacts.fetch().then(function () {
+      _this2.$el.html((0, _viewsContacts2['default'])(_this2.contacts.toJSON()));
     });
   },
 
@@ -162,18 +194,21 @@ var Router = _backbone2['default'].Router.extend({
   },
 
   showSpecificInstructor: function showSpecificInstructor(instructorId) {
-    var _this = this;
+    var _this3 = this;
 
     console.log('show instructor page');
     var instructor = this.contacts.get(instructorId);
 
     if (instructor) {
+      // Contacts have fetched & grabbed one you want
       this.$el.html((0, _viewsInstructor2['default'])(instructor.toJSON()));
     } else {
       (function () {
-        var router = _this;
-        instructor = _this.contacts.add({ objectId: instructorId });
-        _this.showSpinner();
+        // Contacts not fectched so we need to load one you want
+        var router = _this3;
+        instructor = _this3.contacts.add({ objectId: instructorId });
+        _this3.showSpinner();
+
         instructor.fetch().then(function () {
           router.$el.html((0, _viewsInstructor2['default'])(instructor.toJSON()));
         });
@@ -181,21 +216,11 @@ var Router = _backbone2['default'].Router.extend({
     }
   },
 
-  contacts: function contacts() {
-    console.log('show contacts page');
-
-    this.showSpinner();
-
-    var router = this;
-
-    this.contacts.fetch().then(function () {
-
-      router.$el.html((0, _viewsContacts2['default'])(router.contacts.toJSON()));
-    });
-  },
-
+  // Starts set interval by checking url
   start: function start() {
     _backbone2['default'].history.start();
+    // Chain method of router
+    return this;
   }
 
 });
@@ -211,12 +236,13 @@ Object.defineProperty(exports, '__esModule', {
 });
 function processData(data) {
   return data.map(function (item) {
-    return '\n      <li class=\'contact-list-item\' data-contact-list-id="' + item.objectId + '">' + item.Name + '</li>\n      ';
+    return '\n      <li class="instructor-list-item" data-instructor-id="' + item.objectId + '">\n      <span>' + item.Name + '</span>\n      </li>\n      ';
+    // Join array with empty string
   }).join('');
 }
 
 function contactsTemplate(data) {
-  return '\n    <h3>Contact List</h3>\n    <ul>' + processData(data) + '</ul>\n  ';
+  return '\n    <div class="contacts-list">\n      <h3>Contact List</h3>\n      <ul>' + processData(data) + '</ul>\n    </div>\n  ';
 }
 
 exports['default'] = contactsTemplate;
@@ -230,7 +256,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 function instructorTemplate(data) {
 
-  return "\n    <ul>\n      <li>" + data.Photo + "</li>\n      <li><i class='fa fa-user'></i>" + data.Name + "</li>\n      <li><i class='fa fa-enevelope'></i>" + data.Email + "</li>\n      <li><i class='fa fa-phone-square'></i>" + data.Phone + "</li>\n      <li><i class='fa fa-globe'></i>" + data.Location + "</li>\n    </ul>\n  ";
+  return "\n    <ul class=\"instructor\">\n      <button class=\"back-button\" data-to=\"contacts\">\n        <i class+'fa fa-arrow-left'></i>\n      </button>\n      <li class=\"photo\">" + data.Photo + "</li>\n      <li><i class='fa fa-user'></i>  " + data.Name + "</li>\n      <li><i class='fa fa-envelope'></i>  " + data.Email + "</li>\n      <li><i class='fa fa-phone-square'></i>  " + data.Phone + "</li>\n      <li><i class='fa fa-globe'></i>  " + data.Location + "</li>\n    </ul>\n  ";
 }
 
 exports["default"] = instructorTemplate;

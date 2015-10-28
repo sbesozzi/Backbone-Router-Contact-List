@@ -7,7 +7,13 @@ let contactsCollection = Backbone.Collection.extend({
 
   model: instructorModel,
 
-  parse: function(data) {
+  // parse: function(data) {
+  //   return data.results;
+  // }
+
+  // Write parse function as:
+
+  parse(data) {
     return data.results;
   }
 
