@@ -1,3 +1,3 @@
-## Welcome to My Repo
+## Contact List
 
-> I am your Readme.md file, you should probably update me.
+> Creating a contact list using Backbone

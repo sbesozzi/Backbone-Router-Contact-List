@@ -2044,7 +2044,10 @@ ul {
     font-size: 14px; }
 
 .photo {
-  height: 215px;
+  height: 232px;
   background-color: #A9D167; }
+
+.back-button {
+  margin-top: 0; }
 
 /*# sourceMappingURL=main.css.map */

@@ -264,7 +264,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 function instructorTemplate(data) {
 
-  return "\n\n    <ul class=\"instructor\">\n      <button class=\"back-button\" data-to>\n        <i class='fa fa-arrow-left'></i>\n      </button>\n      <li class=\"photo\">" + data.Photo + "</li>\n      <li><i class='fa fa-user'></i>  " + data.Name + "</li>\n      <li><i class='fa fa-envelope'></i>  " + data.Email + "</li>\n      <li><i class='fa fa-phone-square'></i>  " + data.Phone + "</li>\n      <li><i class='fa fa-globe'></i>  " + data.Location + "</li>\n    </ul>\n  ";
+  return "\n\n    <ul class=\"instructor\">\n      \n      <li class=\"photo\">\n      <span class=\"back-button\" data-to>\n        <i class='fa fa-arrow-left'></i>\n      </span>\n      </li>\n      <li><i class='fa fa-user'></i>  " + data.Name + "</li>\n      <li><i class='fa fa-envelope'></i>  " + data.Email + "</li>\n      <li><i class='fa fa-phone-square'></i>  " + data.Phone + "</li>\n      <li><i class='fa fa-globe'></i>  " + data.Location + "</li>\n    </ul>\n  ";
 }
 
 exports["default"] = instructorTemplate;
